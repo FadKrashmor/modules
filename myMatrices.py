@@ -44,8 +44,8 @@ class matrix_2x2():
         
     def construct_rotation(self, angle):
         alpha = (angle * pi)/180
-        self._matrix[0] = [0, cos(alpha), sin(alpha)]
-        self._matrix[1] = [0, -sin(alpha), cos(alpha)]
+        self._matrix[0] = [0, cos(alpha), -sin(alpha)]
+        self._matrix[1] = [0, sin(alpha), cos(alpha)]
 
     def matrix_v_multiply(self, v):
         return [self._matrix[0][0]*v[0] +
