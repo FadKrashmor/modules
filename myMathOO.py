@@ -1,5 +1,8 @@
 """
-26 Nov22
+Created 26 Nov 22
+Rev 1.1 14 Dec 22
+    * method "times" added for real value
+    * Methods for add.. return new object
 """
 from math import atan2, cos, sin, pi
 
@@ -28,15 +31,22 @@ class ComplexVar():
         return (self._coord1**2 + self._coord2**2)**0.5
 
     def add_c1(self, c1):
-        self._coord1 += c1
+        return ComplexVar(self._coord1 + c1, self._coord2)
         
     def add_c2(self, c2):
-        self._coord1 += c2
+        return ComplexVar(self._coord1, self._coord2 + c2)
         
     def plus(self, z):
         return ComplexVar(self._coord1 + z._coord1, 
                             self._coord2 + z._coord2)
 
+    def minus(self, z):
+        return ComplexVar(self._coord1 - z._coord1, 
+                            self._coord2 - z._coord2)
+    
+    def times(self, val):
+        return ComplexVar(self._coord1 * val, self._coord2 * val)
+        
     def divide(self, z):
         denominator = z._coord1**2 + z._coord2**2
         return ComplexVar((self._coord1*z._coord1 + self._coord2*z._coord2)\
@@ -44,10 +54,6 @@ class ComplexVar():
                             (self._coord2*z._coord1 - self._coord1*z._coord2)\
                             /denominator)
         
-    def minus(self, z):
-        return ComplexVar(self._coord1 - z._coord1, 
-                            self._coord2 - z._coord2)
-    
     def mult_complex(self, z):
         #Multiply two complex numbers
         return ComplexVar(self._coord1 * z._coord1 - 
@@ -117,7 +123,7 @@ class ComplexVarPolar():
     
     def minus(self, z):
         #Subtract polar complex var
-        return self.polar_to_cart().plus(z.polar_to_cart()).cart_to_polar()
+        return self.polar_to_cart().minus(z.polar_to_cart()).cart_to_polar()
 
     def divide(self, z):
         #Divide by polar complex var
@@ -156,7 +162,7 @@ if __name__ == "__main__":
     PASS = 1
     FAIL = 0
     testResults = []
-    tc=14
+    tc=6
     if tc==0:
         print("TEST CASE", tc, "Cartesian, init")
         z = ComplexVar()
@@ -205,6 +211,12 @@ if __name__ == "__main__":
         y = ComplexVar(2, 3)
         z = z.plus(y)
         print(z)
+    if tc==6:
+        print('TEST CASE', tc, "times, cartesian")
+        z = ComplexVar(1, 2)
+        y = 2
+        x = z.times(y)
+        print("x =", x, ", z =", z)
     if tc==10:
         print("TEST CASE", tc, "Polar, init")
         z = ComplexVarPolar()
